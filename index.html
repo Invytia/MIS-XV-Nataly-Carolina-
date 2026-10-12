@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV Años - Nataly Carolina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colores Base - Rosa Pastel y Dorado */
+            --rosa-pastel: #F8C8DC; 
+            --rosa-oscuro: #E293B3;
+            --dorado: #D4AF37; 
+            --dorado-claro: #F9E596;
+            --text-dark: #4A4A4A; 
+            --text-muted: #888888;
+            
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FFF5F7; 
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- FONDO MAGICO --- */
+        .fixed-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #FFF5F7 0%, #FDE4EC 100%);
+            z-index: -1;
+        }
+
+        /* --- EFECTO DE DESTELLOS MAGICOS --- */
+        .sparkle-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            background: var(--dorado-claro);
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 12px 3px var(--dorado);
+            animation: flicker 3s infinite, drift 15s infinite linear;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0; box-shadow: 0 0 5px 1px var(--dorado-claro); transform: scale(0.8); }
+            50% { opacity: 0.8; box-shadow: 0 0 15px 5px var(--dorado); transform: scale(1.3); }
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(110vh) translateX(-20px); }
+            100% { transform: translateY(-10vh) translateX(50px); }
+        }
+
+        /* --- REPRODUCTOR DE MÚSICA --- */
+        .sticky-music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--dorado);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            z-index: 2000;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.6s var(--transition-smooth);
+            border: 2px solid #fff;
+            outline: none;
+        }
+
+        body.content-active .sticky-music-btn {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .sticky-music-btn:hover {
+            transform: scale(1.1);
+            background-color: #B5952F;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+        }
+
+        .sticky-music-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+        /* --- SOBRE MÁGICO --- */
+        #envelope-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1.2s ease-in-out, visibility 1.2s;
+            background: linear-gradient(135deg, rgba(255,245,247,0.95), rgba(253,228,236,0.95));
+            backdrop-filter: blur(10px);
+        }
+
+        #envelope-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .envelope-text-container {
+            text-align: center; margin-bottom: 50px;
+            animation: floatText 4s ease-in-out infinite;
+            position: relative; z-index: 10;
+        }
+
+        .env-tag {
+            font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 10px;
+            text-transform: uppercase; color: var(--dorado); font-weight: 700;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .env-title {
+            font-family: 'Pinyon Script', cursive; font-size: 80px;
+            color: var(--rosa-oscuro); line-height: 1.2; margin-top: 5px;
+            text-shadow: 0 4px 15px rgba(226, 147, 179, 0.3);
+        }
+
+        .envelope-wrapper {
+            position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth);
+            z-index: 10;
+        }
+        
+        .envelope-wrapper:hover { transform: translateY(-8px); }
+
+        .envelope {
+            position: relative; width: 320px; height: 210px;
+            background-color: var(--rosa-pastel); border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15), 0 0 40px rgba(212, 175, 55, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .envelope::before {
+            content: ''; position: absolute; top: 0; right: 0;
+            border-right: 160px solid #FADBE5; border-top: 105px solid transparent;
+            border-bottom: 105px solid #FADBE5; z-index: 2;
+        }
+        
+        .envelope::after {
+            content: ''; position: absolute; top: 0; left: 0;
+            border-left: 160px solid #F9D1DF; border-top: 105px solid transparent;
+            border-bottom: 105px solid #F9D1DF; z-index: 2;
+        }
+
+        .front-flap {
+            position: absolute; top: 0; left: 0;
+            border-left: 160px solid transparent; border-right: 160px solid transparent;
+            border-top: 115px solid #FCEEF3; transform-origin: top;
+            transition: transform 0.9s var(--transition-smooth); z-index: 4;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+
+        .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
+
+        .wax-seal {
+            position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
+            width: 50px; height: 50px; background-color: var(--dorado);
+            border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5); 
+            transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
+            border: 2px solid #fff;
+        }
+        
+        .wax-seal svg { width: 24px; height: 24px; fill: #fff; }
+        .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.5); pointer-events: none; }
+
+        .hint-text {
+            text-align: center; font-size: 12px; font-weight: 600; text-transform: uppercase; 
+            letter-spacing: 5px; color: var(--rosa-oscuro); margin-top: 50px; 
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        @keyframes floatText { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        #main-invitation {
+            display: none; width: 100%; flex-direction: column; align-items: center;
+            opacity: 0; animation: fadeInMain 2s forwards 0.3s; position: relative;
+        }
+        
+        body.content-active #main-invitation { display: flex; }
+        @keyframes fadeInMain { to { opacity: 1; } }
+
+        .anim-element { opacity: 0; transition: all 1.2s var(--transition-smooth); position: relative; z-index: 2; }
+        .anim-fade-up { transform: translateY(50px); }
+        .anim-fade-up.in-view { opacity: 1; transform: translateY(0); }
+        .anim-zoom { transform: scale(0.9); opacity: 0; filter: blur(5px); }
+        .anim-zoom.in-view { opacity: 1; transform: scale(1); filter: blur(0); }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.5s; }
+        .delay-4 { transition-delay: 0.7s; }
+
+        .section-block {
+            width: 100%; padding: 120px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            position: relative; overflow: hidden;
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* --- TEMAS INTERCALADOS --- */
+        .bg-theme-1 { 
+            background-color: rgba(255, 255, 255, 0.75); 
+            --heading-color: var(--rosa-oscuro);
+            --body-color: var(--text-dark);
+            --border-color: rgba(212, 175, 55, 0.3);
+        }
+        
+        .bg-theme-2 { 
+            background-color: rgba(248, 200, 220, 0.65); 
+            --heading-color: var(--dorado);
+            --body-color: var(--text-dark);
+            --border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .tag-line {
+            font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 6px;
+            text-transform: uppercase; color: var(--dorado); margin-bottom: 25px; font-weight: 700;
+        }
+
+        .title-script {
+            font-family: 'Pinyon Script', cursive; font-size: 90px;
+            color: var(--heading-color); margin-bottom: 20px; line-height: 1.1; font-weight: 400;
+            text-shadow: 0 2px 15px rgba(255,255,255,0.8);
+        }
+
+        .body-serif {
+            font-family: 'Cormorant Garamond', serif; font-size: 24px;
+            line-height: 1.6; color: var(--body-color); font-style: italic;
+            max-width: 600px; padding: 0 15px; font-weight: 500; 
+        }
+
+        .line-divider { width: 2px; height: 70px; background: linear-gradient(to bottom, transparent, var(--dorado), transparent); margin: 35px auto; }
+        .line-horizontal { width: 100px; height: 2px; background: linear-gradient(to right, transparent, var(--dorado), transparent); margin: 50px auto; }
+
+        /* --- FOTOS LIBRES SIN CAJA --- */
+        .free-img {
+            width: 100%; max-width: 400px; margin: 40px auto;
+            border-radius: 18px; /* Bordes suaves */
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+            transition: transform 0.8s ease, box-shadow 0.8s ease, filter 0.8s ease;
+            cursor: pointer;
+            position: relative; z-index: 2;
+        }
+        .free-img:hover {
+            transform: scale(1.03) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.05);
+        }
+
+        /* --- LIGHTBOX (Pantalla completa) --- */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
+        }
+        #lightbox.active { opacity: 1; visibility: visible; }
+        #lightbox img {
+            max-width: 90%; max-height: 90%; border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+            transform: scale(0.8); transition: transform 0.4s ease;
+        }
+        #lightbox.active img { transform: scale(1); }
+        .close-lightbox {
+            position: absolute; top: 20px; right: 30px; color: #fff;
+            font-size: 40px; cursor: pointer; font-family: sans-serif;
+        }
+
+        .info-title {
+            font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 5px; line-height: 1.4;
+            text-transform: uppercase; color: var(--dorado); margin-bottom: 15px; font-weight: 700;
+        }
+
+        .info-data {
+            font-family: 'Cormorant Garamond', serif; font-size: 36px;
+            color: var(--heading-color); margin-bottom: 5px; font-weight: 600; line-height: 1.3;
+        }
+
+        /* --- CONTADOR --- */
+        .countdown-container {
+            display: flex; justify-content: center; gap: 15px; margin: 40px auto; z-index: 2; position: relative;
+        }
+        .time-box {
+            background: rgba(255, 255, 255, 0.95); border: 1px solid var(--dorado-claro); border-radius: 12px;
+            padding: 15px 12px; min-width: 75px; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+        }
+        .time-box span {
+            font-family: 'Cinzel', serif; font-size: 30px; color: var(--rosa-oscuro);
+            font-weight: 700; line-height: 1.2; 
+        }
+        .time-box small {
+            font-family: 'Montserrat', sans-serif; font-size: 11px; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--text-muted); margin-top: 5px; font-weight: 600;
+        }
+
+        /* --- BOTONES --- */
+        .btn-solid {
+            display: inline-block; padding: 18px 40px; 
+            font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 4px; 
+            text-transform: uppercase; text-decoration: none; 
+            cursor: pointer; border-radius: 35px; transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5;
+        }
+        
+        .bg-theme-1 .btn-solid {
+            background-color: var(--dorado); color: #fff; border: 1px solid var(--dorado-claro); 
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+        .bg-theme-1 .btn-solid:hover { background-color: #B5952F; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5); }
+        
+        .bg-theme-2 .btn-solid {
+            background-color: #FFFFFF; color: var(--rosa-oscuro); border: 1px solid #FFFFFF; 
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
+        }
+        .bg-theme-2 .btn-solid:hover { background-color: #FFF5F7; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 255, 255, 0.8); }
+
+        .calendar-wrapper {
+            width: 100%; max-width: 340px; margin: 40px auto; padding: 35px 25px; background: rgba(255, 255, 255, 0.9); 
+            border-radius: 15px; box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15); box-sizing: border-box; 
+            border: 1px solid var(--dorado-claro); position: relative; z-index: 2;
+        }
+
+        .calendar-month {
+            font-family: 'Cinzel', serif; font-size: 22px; color: var(--dorado);
+            text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; font-weight: 700;
+        }
+
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; width: 100%; box-sizing: border-box; }
+        .cal-header { font-family: 'Montserrat', sans-serif; font-size: clamp(10px, 3vw, 12px); font-weight: 700; color: var(--rosa-oscuro); padding-bottom: 12px; }
+        .cal-day { font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 4.5vw, 22px); font-weight: 600; color: var(--text-dark); display: flex; justify-content: center; align-items: center; aspect-ratio: 1; }
+        .cal-day.active { background-color: var(--dorado); color: #fff; border-radius: 50%; font-weight: 600; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
+
+        .map-box {
+            width: 100%; max-width: 550px; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 15px; 
+            box-shadow: 0 20px 40px rgba(212,175,55,0.2); position: relative; z-index: 2; border: 2px solid var(--dorado-claro);
+            background: #fff; padding: 5px;
+        }
+        .map-box iframe { width: 100%; height: 100%; border: none; border-radius: 10px; }
+
+        /* --- ITINERARIO --- */
+        .timeline-container {
+            width: 100%; max-width: 400px; margin: 30px auto; position: relative; text-align: left;
+        }
+        .timeline-item {
+            display: flex; margin-bottom: 25px; position: relative;
+        }
+        .timeline-time {
+            font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--dorado);
+            width: 90px; flex-shrink: 0; padding-top: 2px;
+        }
+        .timeline-content {
+            font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--text-dark);
+            padding-left: 20px; border-left: 2px solid var(--dorado-claro); position: relative;
+        }
+        .timeline-content::before {
+            content: ''; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px;
+            background: var(--rosa-oscuro); border-radius: 50%; box-shadow: 0 0 10px rgba(226,147,179,0.5);
+        }
+
+        /* --- FORMULARIOS --- */
+        .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; position: relative; z-index: 2; }
+        .input-line {
+            width: 100%; padding: 18px 20px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; outline: none;
+            text-align: center; transition: all 0.4s; 
+        }
+        textarea.input-line { resize: vertical; min-height: 120px; }
+        select.input-line { appearance: none; text-align-last: center; cursor: pointer; }
+        
+        .bg-theme-1 .input-line, .bg-theme-2 .input-line { background: rgba(255,255,255,0.9); border: 1px solid var(--dorado-claro); color: var(--text-dark); box-shadow: 0 5px 15px rgba(212,175,55,0.1); }
+        .bg-theme-1 .input-line:focus, .bg-theme-2 .input-line:focus { border-color: var(--dorado); box-shadow: 0 0 15px rgba(212,175,55,0.3); background: #ffffff; }
+        
+        .ticket-card {
+            width: 100%; max-width: 380px; margin: 30px auto; background: rgba(255, 255, 255, 0.85);
+            padding: 50px 25px; position: relative; text-align: center; border-radius: 15px; box-shadow: 0 20px 40px rgba(212,175,55,0.2);
+            border: 1px solid var(--dorado-claro); z-index: 2; 
+        }
+        .ticket-card::before, .ticket-card::after {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background-color: var(--rosa-pastel); 
+            border-radius: 50%; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .ticket-card::before { left: -16px; border-right: 1px solid var(--dorado-claro); }
+        .ticket-card::after { right: -16px; border-left: 1px solid var(--dorado-claro); }
+        
+        .footer-invytia {
+            font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--text-muted);
+            text-align: center; margin: 40px 0 20px 0; text-transform: uppercase;
+        }
+
+        @media (max-width: 400px) {
+            .env-title { font-size: 60px; }
+            .title-script { font-size: 70px; }
+            .section-block { padding: 90px 15px; }
+            .info-data { font-size: 30px; }
+            .countdown-container { gap: 10px; }
+            .time-box { min-width: 60px; padding: 12px 5px; }
+            .time-box span { font-size: 24px; }
+            .map-box { height: 260px; }
+            .envelope { width: 300px; height: 195px; }
+            .envelope::before, .envelope::after { border-left-width: 150px; border-right-width: 150px; border-top-width: 97px; border-bottom-width: 97px; }
+            .front-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 105px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FONDO FIJO GLOBAL -->
+    <div class="fixed-bg"></div>
+
+    <!-- AUDIO OCULTO -->
+    <audio id="bg-music" src="assets/song.mp3" loop></audio>
+
+    <!-- BOTÓN STICKY DE MÚSICA -->
+    <button id="music-btn" class="sticky-music-btn" onclick="toggleMusic()" aria-label="Controlar música">
+        <svg id="music-icon-play" style="display:none;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="music-icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <!-- LIGHTBOX PARA FOTOS -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoom">
+    </div>
+
+    <!-- PANTALLA INICIAL DEL SOBRE -->
+    <div id="envelope-screen">
+        <div class="envelope-text-container">
+            <div class="env-tag">Mis XV Años</div>
+            <h1 class="env-title">Nataly Carolina</h1>
+        </div>
+
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="front-flap"></div>
+            <div class="wax-seal">
+                <svg viewBox="0 0 24 24"><path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 17L5.5 21L7.5 13.5L2 9H9L12 2Z"/></svg>
+            </div>
+            <div class="envelope"></div>
+        </div>
+        
+        <div class="hint-text" style="position: relative; z-index: 10;">Tocar para descubrir la magia</div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main id="main-invitation">
+        
+        <!-- Contenedor para los Destellos -->
+        <div id="sparkles" class="sparkle-container"></div>
+        
+        <!-- 1. Portada -->
+        <section class="section-block bg-theme-1">
+            <div class="anim-element anim-fade-up delay-1 tag-line">Mis XV Años</div>
+            <h1 class="anim-element anim-zoom delay-2 title-script">Nataly Carolina</h1>
+            <div class="anim-element anim-fade-up delay-3 line-divider"></div>
+            
+            <img src="assets/1.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Quinceañera" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+        </section>
+
+        <!-- 2. Padres y Madrinas -->
+        <section class="section-block bg-theme-2">
+            <div class="anim-element anim-fade-up delay-1 info-title">Con la bendición de Dios y mi padre</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">Juan de Dios Gatica Aquines</div>
+            
+            <img src="assets/2.jpg" class="anim-element anim-fade-up delay-3 free-img" alt="Padre" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+
+            <div class="anim-element anim-zoom delay-4 line-horizontal"></div>
+            
+            <div class="anim-element anim-fade-up delay-4 info-title">Y mis Madrinas</div>
+            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 32px;">Maru Gatica</div>
+            <div class="anim-element anim-fade-up delay-4" style="font-family: 'Cinzel', serif; font-size: 18px; margin: 10px 0; font-weight: 700; color: var(--rosa-oscuro);">&</div>
+            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 32px;">Iris Gatica</div>
+
+            <img src="assets/3.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Madrinas" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+        </section>
+
+        <!-- 3. Fecha, Contador y Calendario -->
+        <section class="section-block bg-theme-1">
+            <div class="anim-element anim-fade-up delay-1 info-title" style="letter-spacing: 2px;">Únete a esta gran celebración el</div>
+            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 42px; font-weight: 700;">14 de Noviembre</div>
+            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 28px; color: var(--dorado); letter-spacing: 3px;">2026</div>
+
+            <!-- CONTADOR -->
+            <div class="anim-element anim-fade-up delay-4 countdown-container">
+                <div class="time-box"><span id="days">00</span><small>Días</small></div>
+                <div class="time-box"><span id="hours">00</span><small>Hrs</small></div>
+                <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
+                <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
+            </div>
+
+            <!-- Calendario adaptado a Noviembre 2026 -->
+            <div class="anim-element anim-zoom delay-4 calendar-wrapper">
+                <div class="calendar-month">Noviembre</div>
+                <div class="calendar-grid">
+                    <div class="cal-header">D</div><div class="cal-header">L</div><div class="cal-header">M</div><div class="cal-header">M</div><div class="cal-header">J</div><div class="cal-header">V</div><div class="cal-header">S</div>
+                    <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+                    <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day active">14</div>
+                    <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+                    <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+                    <div class="cal-day">29</div><div class="cal-day">30</div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+            </div>
+
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Nataly+Carolina&dates=20261114T190000Z/20261115T020000Z&details=Acompa%C3%B1anos+a+celebrar+este+gran+d%C3%ADa" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agendar Evento</a>
+
+            <img src="assets/4.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Fecha" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+        </section>
+
+        <!-- 4. Ubicaciones Ceremonia y Recepción -->
+        <section class="section-block bg-theme-2">
+            <!-- Ceremonia -->
+            <div class="anim-element anim-fade-up delay-1 info-title">Ceremonia Religiosa</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">Parroquia y Santuario</div>
+            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 28px;">Nuestra Señora de Guadalupe</div>
+            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 28px; color: var(--dorado); margin-top: 10px;">7:00 p.m.</div>
+            
+            <div class="anim-element anim-zoom delay-4 map-box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.829550845864!2d-100.25999999999999!3d25.6769444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662bfff882bc205%3A0x676c9d0aeab7f9dd!2sParroquia%20y%20Santuario%20de%20Nuestra%20Se%C3%B1ora%20de%20Guadalupe!5e0!3m2!1ses-419!2smx!4v1791766935683!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/hFKmz9Hh92AtHXg87" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Abrir en Maps</a>
+
+            <img src="assets/5.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Ceremonia" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+
+            <div class="anim-element anim-zoom delay-4 line-horizontal" style="margin: 70px auto;"></div>
+
+            <!-- Recepción -->
+            <div class="anim-element anim-fade-up delay-1 info-title">Recepción</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">Salón Colonial Eventos</div>
+            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 28px; color: var(--dorado); margin-top: 10px;">8:00 p.m.</div>
+            
+            <div class="anim-element anim-zoom delay-4 map-box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.819295047535!2d-100.2615581!3d25.6772843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662be2a3820998d%3A0x7cd29ff3e4182e0a!2sColonial%20Eventos!5e0!3m2!1ses-419!2smx!4v1791766965782!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/VXSnMXxKd7rjEoYR6" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Abrir en Maps</a>
+
+            <img src="assets/6.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Recepción" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+
+        </section>
+
+        <!-- 5. Itinerario -->
+        <section class="section-block bg-theme-1">
+            <div class="anim-element anim-fade-up delay-1 info-title">Itinerario</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">El plan de la noche</div>
+            
+            <div class="anim-element anim-fade-up delay-3 timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-time">8:00 pm</div>
+                    <div class="timeline-content">Inicia Recepción</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">9:00 pm</div>
+                    <div class="timeline-content">Cena</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">9:40 pm</div>
+                    <div class="timeline-content">Pastel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">10:00 pm</div>
+                    <div class="timeline-content">Baile - Grupo Legado SG</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">11:30 pm</div>
+                    <div class="timeline-content">Hora Loca</div>
+                </div>
+            </div>
+
+            <img src="assets/7.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Itinerario" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+        </section>
+
+        <!-- 6. Dress Code y Mesa de Regalos -->
+        <section class="section-block bg-theme-2">
+            <div class="anim-element anim-fade-up delay-1 info-title">Código de Vestimenta</div>
+            <div class="anim-element anim-fade-up delay-2 info-data" style="font-family: 'Cinzel', serif; font-size: 40px; margin: 15px 0; letter-spacing: 6px; color: var(--dorado);">
+                FORMAL
+            </div>
+            
+            <div class="anim-element anim-zoom delay-3 line-horizontal" style="margin: 50px auto;"></div>
+
+            <div class="anim-element anim-fade-up delay-3 info-title">Mesa de Regalos</div>
+            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 32px;">Lluvia de Sobres</div>
+            <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 20px;">
+                Es la tradición de regalar dinero en efectivo a la quinceañera en un sobre el día del evento. ¡Muchas gracias!
+            </p>
+
+            <img src="assets/8.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Regalos" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+        </section>
+
+        <!-- 7. Galería en Vivo (QR Tabletop Logic) -->
+        <section class="section-block bg-theme-1">
+            <div class="anim-element anim-fade-up delay-1 info-title">Galería en Vivo</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">Captura la Magia</div>
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 25px auto;">
+                Ayúdame a capturar cada momento. Sube tus fotos y videos en vivo durante el evento a nuestra carpeta compartida.
+            </p>
+            <a href="https://drive.google.com/drive/folders/1Rj38dclPcwKFicBTwDCeMXgwqtgSA2Of?usp=sharing" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Subir Fotos y Videos</a>
+
+            <img src="assets/9.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Galeria" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+        </section>
+
+        <!-- 8. RSVP y Pases VIP -->
+        <section class="section-block bg-theme-2">
+            
+            <!-- Tarjeta VIP Oculta -->
+            <div id="pases-section" style="display: none; width: 100%;">
+                <div class="anim-element anim-fade-up delay-1 info-title">Tu Pase al Evento</div>
+                <div class="anim-element anim-zoom delay-2 ticket-card">
+                    <div class="tag-line" style="margin-bottom: 20px; color: var(--dorado);">Invitación de Honor</div>
+                    
+                    <div id="ticket-name" style="font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--rosa-oscuro); font-style: italic; margin-bottom: 15px; font-weight: 700; line-height: 1.2;">
+                        Invitado Especial
+                    </div>
+
+                    <div class="body-serif" style="font-size: 20px; margin-bottom: 15px; color: var(--text-dark);">Lugares Reservados</div>
+                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 65px; font-weight: 700; color: var(--rosa-oscuro); line-height: 1;">
+                        0
+                    </div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 35px;">
+                        Muestra esta pantalla en la recepción
+                    </div>
+                </div>
+                <div class="anim-element anim-fade-up line-horizontal" style="margin: 60px auto;"></div>
+            </div>
+
+            <!-- Formulario RSVP -->
+            <div class="anim-element anim-fade-up delay-1 info-title">RSVP</div>
+            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 38px;">Confirmar Asistencia</div>
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 35px auto; font-size: 22px;">
+                Agradeceremos tu confirmación para preparar todo para este gran día.
+            </p>
+            
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <input type="text" id="rsvp-name" class="input-line" placeholder="Tu nombre y apellido">
+            </div>
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <select id="rsvp-status" class="input-line">
+                    <option value="" disabled selected>¿Nos acompañarás a celebrar?</option>
+                    <option value="yes">Con gusto asistiré</option>
+                    <option value="no">No me será posible asistir</option>
+                </select>
+            </div>
+            
+            <!-- Campo dinámico de cantidad de pases -->
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <select id="rsvp-guests" class="input-line" style="display: none;">
+                    <option value="" disabled selected>¿Cuántas personas asisten?</option>
+                </select>
+            </div>
+            
+            <button onclick="sendRSVP()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 70px;">Confirmar por WhatsApp</button>
+
+            <div class="anim-element anim-zoom line-divider"></div>
+
+            <!-- Muro de Deseos -->
+            <div class="anim-element anim-fade-up delay-1 info-title">Mensajes Especiales</div>
+            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 38px;">Muro de los Deseos</div>
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 25px auto; font-size: 22px;">
+                "Gracias por compartir esta noche conmigo"
+            </p>
+
+            <div class="anim-element anim-fade-up delay-3 form-group" style="margin-top: 30px;">
+                <input type="text" id="wish-name" class="input-line" placeholder="De parte de...">
+            </div>
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <textarea id="wish-message" class="input-line" placeholder="Escribe aquí tu mensaje..."></textarea>
+            </div>
+            <button onclick="sendWish()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 50px;">Enviar Mensaje</button>
+            
+            <img src="assets/10.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Despedida" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+
+            <div class="anim-element anim-fade-up footer-invytia">
+                INVYTIA PREMIUM DESIGN
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- LIGHTBOX PARA FOTOS ---
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // --- EFECTO DE DESTELLOS MAGICOS ---
+        function createSparkles() {
+            const container = document.getElementById('sparkles');
+            const numSparkles = 50; 
+            for(let i=0; i<numSparkles; i++) {
+                let sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 120 + 'vh';
+                sparkle.style.width = (Math.random() * 5 + 2) + 'px';
+                sparkle.style.height = sparkle.style.width;
+                sparkle.style.animationDelay = (Math.random() * 5) + 's';
+                sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's, ' + (Math.random() * 15 + 10) + 's';
+                container.appendChild(sparkle);
+            }
+        }
+
+        // --- CONTROL DE AUDIO ---
+        let isMusicPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const playIcon = document.getElementById('music-icon-play');
+        const pauseIcon = document.getElementById('music-icon-pause');
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            } else {
+                bgMusic.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // --- ANIMACIÓN INICIAL DEL SOBRE ---
+        function openEnvelope() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            const screen = document.getElementById('envelope-screen');
+            wrapper.classList.add('open');
+            
+            setTimeout(() => {
+                screen.classList.add('fade-out');
+                document.body.classList.add('content-active');
+                createSparkles(); 
+                
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }).catch(e => {
+                    console.log("El navegador bloqueó el autoplay de audio.");
+                    isMusicPlaying = false;
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                });
+            }, 1000);
+        }
+
+        // --- INTERSECTION OBSERVER ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.anim-element').forEach(el => observer.observe(el));
+        });
+
+        // --- CONTADOR REGRESIVO (14 Nov 2026, 19:00:00) ---
+        const countdownDate = new Date("Nov 14, 2026 19:00:00").getTime();
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+        }, 1000);
+
+        // --- LÓGICA DEL SISTEMA DE PASES AVANZADO ---
+        let pasesAsignados = 0;
+        let nombreInvitado = "Invitado Especial";
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        const dbInvitados = {
+            "1": { nombre: "Fam. Ejemplo", pases: 5 },
+            "2": { nombre: "Invitado Especial", pases: 2 }
+        };
+
+        let parametroId = urlParams.get('id');
+        let parametroPases = urlParams.get('p') || urlParams.get('pases');
+        
+        // Número proporcionado para confirmaciones y buenos deseos (México: +52)
+        const currentPhoneNumber = "528186815596"; 
+
+        if (parametroId && dbInvitados[parametroId]) {
+            pasesAsignados = dbInvitados[parametroId].pases;
+            nombreInvitado = dbInvitados[parametroId].nombre;
+            const inputName = document.getElementById("rsvp-name");
+            inputName.value = nombreInvitado;
+            inputName.disabled = true; 
+        } else if (parametroPases && !isNaN(parametroPases)) {
+            pasesAsignados = parseInt(parametroPases);
+        } else {
+            pasesAsignados = 10; 
+        }
+
+        if (pasesAsignados > 0 && parametroId) {
+            const pasesSection = document.getElementById('pases-section');
+            if (pasesSection) {
+                pasesSection.style.display = 'block';
+                document.getElementById('ticket-count').innerText = pasesAsignados;
+                const nameEl = document.getElementById('ticket-name');
+                if (nameEl) nameEl.innerText = nombreInvitado;
+            }
+        }
+
+        const rsvpStatus = document.getElementById("rsvp-status");
+        const rsvpGuests = document.getElementById("rsvp-guests");
+
+        rsvpStatus.addEventListener('change', (e) => {
+            if(e.target.value === 'yes') {
+                rsvpGuests.style.display = 'block';
+                rsvpGuests.innerHTML = '<option value="" disabled selected>¿Cuántas personas asisten?</option>';
+                for(let i = 1; i <= pasesAsignados; i++) {
+                    rsvpGuests.innerHTML += `<option value="${i}">${i} persona${i > 1 ? 's' : ''}</option>`;
+                }
+            } else {
+                rsvpGuests.style.display = 'none';
+                rsvpGuests.value = ""; 
+            }
+        });
+
+        // --- ENVÍO DE ASISTENCIA A WHATSAPP ---
+        function sendRSVP() {
+            const name = document.getElementById("rsvp-name").value.trim();
+            const status = document.getElementById("rsvp-status").value;
+            const guests = document.getElementById("rsvp-guests").value;
+            
+            if (name === "" || status === "") { alert("Por favor, selecciona una opción de asistencia."); return; }
+            if (status === "yes" && guests === "") { alert("Por favor, indica cuántas personas asistirán."); return; }
+
+            let message = "";
+            if (status === "yes") {
+                message = encodeURIComponent(`¡Hola! Soy ${name}. Sí, confirmo con gusto mi asistencia a los XV Años de Nataly Carolina. Seremos ${guests} persona(s) en total.`);
+            } else {
+                message = encodeURIComponent(`¡Hola! Soy ${name}. Lamentablemente no me será posible asistir a los XV Años de Nataly Carolina. Agradezco mucho la invitación.`);
+            }
+            window.open(`https://wa.me/${currentPhoneNumber}?text=${message}`, '_blank');
+        }
+
+        // --- ENVÍO DE MENSAJE DE DESEOS A WHATSAPP ---
+        function sendWish() {
+            const name = document.getElementById("wish-name").value.trim();
+            const wish = document.getElementById("wish-message").value.trim();
+            
+            if (name === "" || wish === "") { alert("Por favor, ingresa tu nombre y tu mensaje."); return; }
+            const message = encodeURIComponent(`Hola Nataly Carolina, soy ${name}. Te envío esta felicitación con mucho cariño por tus XV Años:\n\n"${wish}"`);
+            window.open(`https://wa.me/${currentPhoneNumber}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
