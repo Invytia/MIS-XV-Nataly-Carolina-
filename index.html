@@ -176,9 +176,14 @@
             box-shadow: 0 5px 15px rgba(194, 130, 152, 0.4); 
             transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
             border: 1px solid #fff;
+            /* Modificaciones para la letra N */
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            color: #fff;
+            line-height: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         
-        .wax-seal svg { width: 22px; height: 22px; fill: #fff; }
         .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.5); pointer-events: none; }
 
         .hint-text {
@@ -209,6 +214,7 @@
         .delay-2 { transition-delay: 0.3s; }
         .delay-3 { transition-delay: 0.5s; }
         .delay-4 { transition-delay: 0.7s; }
+        .delay-5 { transition-delay: 0.9s; }
 
         .section-block {
             width: 100%; padding: 120px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -236,7 +242,6 @@
             color: var(--rosa-oscuro); margin-bottom: 15px; line-height: 1; font-weight: 400;
         }
 
-        /* NUEVA CLASE PARA NOMBRES EN MANUSCRITA */
         .name-script {
             font-family: 'Pinyon Script', cursive; font-size: 65px;
             color: var(--text-dark); line-height: 1.1; margin: 5px 0;
@@ -457,9 +462,7 @@
 
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="front-flap"></div>
-            <div class="wax-seal">
-                <svg viewBox="0 0 24 24"><path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 17L5.5 21L7.5 13.5L2 9H9L12 2Z"/></svg>
-            </div>
+            <div class="wax-seal">N</div>
             <div class="envelope"></div>
         </div>
         
@@ -481,25 +484,34 @@
             <img src="assets/1.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Quinceañera" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
         </section>
 
-        <!-- 2. Padres y Madrinas -->
+        <!-- 2. Mensaje Especial, Padres y Madrinas -->
         <section class="section-block bg-theme-2">
-            <div class="anim-element anim-fade-up delay-1 info-title">Con la bendición de Dios y mi padre</div>
+            
+            <!-- Mensaje Especial Agregado -->
+            <p class="anim-element anim-fade-up delay-1 body-serif" style="font-size: 26px; margin-bottom: 40px; text-align: center;">
+                "Mis XV años son un sueño que hoy se hace realidad y poder compartirlo con ustedes lo hace todavía más especial. <br><br>
+                Gracias por acompañarme en este día tan mágico."
+            </p>
+            
+            <div class="anim-element anim-zoom delay-2 line-horizontal" style="margin-top: 10px; margin-bottom: 50px;"></div>
+
+            <div class="anim-element anim-fade-up delay-3 info-title">Con la bendición de Dios y mi padre</div>
             
             <!-- Nombre del Padre en Manuscrita -->
-            <div class="anim-element anim-fade-up delay-2 name-script">Juan de Dios Gatica Aquines</div>
+            <div class="anim-element anim-fade-up delay-4 name-script">Juan de Dios Gatica Aquines</div>
             
-            <img src="assets/2.jpg" class="anim-element anim-fade-up delay-3 free-img" alt="Padre" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+            <img src="assets/2.jpg" class="anim-element anim-fade-up delay-5 free-img" alt="Padre" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
 
-            <div class="anim-element anim-zoom delay-4 line-horizontal"></div>
+            <div class="anim-element anim-zoom delay-5 line-horizontal"></div>
             
-            <div class="anim-element anim-fade-up delay-4 info-title">Y mis Madrinas</div>
+            <div class="anim-element anim-fade-up delay-5 info-title">Y mis Madrinas</div>
             
             <!-- Nombres de Madrinas en Manuscrita -->
-            <div class="anim-element anim-fade-up delay-4 name-script">Maru Gatica</div>
-            <div class="anim-element anim-fade-up delay-4" style="font-family: 'Montserrat', sans-serif; font-size: 14px; margin: 10px 0; font-weight: 400; color: var(--dorado);">&</div>
-            <div class="anim-element anim-fade-up delay-4 name-script">Iris Gatica</div>
+            <div class="anim-element anim-fade-up delay-5 name-script">Maru Gatica</div>
+            <div class="anim-element anim-fade-up delay-5" style="font-family: 'Montserrat', sans-serif; font-size: 14px; margin: 10px 0; font-weight: 400; color: var(--dorado);">&</div>
+            <div class="anim-element anim-fade-up delay-5 name-script">Iris Gatica</div>
 
-            <img src="assets/3.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Madrinas" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+            <img src="assets/3.jpg" class="anim-element anim-fade-up delay-5 free-img" alt="Madrinas" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
         </section>
 
         <!-- 3. Fecha, Contador y Calendario -->
@@ -603,15 +615,22 @@
                 FORMAL
             </div>
             
-            <div class="anim-element anim-zoom delay-3 line-horizontal"></div>
+            <!-- Aviso sobre los colores -->
+            <div class="anim-element anim-fade-up delay-3" style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; color: var(--rosa-oscuro); margin-top: 10px; max-width: 80%;">
+                Reservar el color rosa y dorado para la quinceañera
+            </div>
+            
+            <div class="anim-element anim-zoom delay-4 line-horizontal"></div>
 
-            <div class="anim-element anim-fade-up delay-3 info-title">Mesa de Regalos</div>
-            <div class="anim-element anim-fade-up delay-4 info-data">Lluvia de Sobres</div>
-            <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 15px;">
-                Es la tradición de regalar dinero en efectivo a la quinceañera en un sobre el día del evento. ¡Muchas gracias!
+            <div class="anim-element anim-fade-up delay-4 info-title">Mesa de Regalos</div>
+            <div class="anim-element anim-fade-up delay-5 info-data">Lluvia de Sobres</div>
+            
+            <!-- Texto de Lluvia de Sobres Actualizado -->
+            <p class="anim-element anim-fade-up delay-5 body-serif" style="margin-top: 15px;">
+                Tu presencia es mi mejor regalo. Si deseas hacerme un presente contaremos con un buzón en la recepción para lluvia de sobres.
             </p>
 
-            <img src="assets/8.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Regalos" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+            <img src="assets/8.jpg" class="anim-element anim-fade-up delay-5 free-img" alt="Regalos" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
         </section>
 
         <!-- 7. Galería en Vivo -->
