@@ -7,13 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Colores Base - Rosa Pastel y Dorado */
-            --rosa-pastel: #F8C8DC; 
-            --rosa-oscuro: #E293B3;
-            --dorado: #D4AF37; 
-            --dorado-claro: #F9E596;
-            --text-dark: #4A4A4A; 
-            --text-muted: #888888;
+            /* Paleta Premium: Rosa Suave, Acentos en Oro Muted y Texto Carbón */
+            --rosa-pastel: #FDF1F4; 
+            --rosa-oscuro: #C28298;
+            --dorado: #C5A059; /* Dorado elegante, no tan amarillo */
+            --text-dark: #3A3133; /* Gris carbón cálido para alto contraste y elegancia */
+            --text-muted: #887B80;
             
             --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -27,7 +26,7 @@
         body, html {
             width: 100%;
             font-family: 'Montserrat', sans-serif;
-            background-color: #FFF5F7; 
+            background-color: var(--rosa-pastel); 
             color: var(--text-dark);
             overflow-x: hidden;
             scroll-behavior: smooth;
@@ -39,7 +38,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(135deg, #FFF5F7 0%, #FDE4EC 100%);
+            background: linear-gradient(135deg, #FDF1F4 0%, #F5DDE4 100%);
             z-index: -1;
         }
 
@@ -54,21 +53,21 @@
 
         .sparkle {
             position: absolute;
-            background: var(--dorado-claro);
+            background: #FFF;
             border-radius: 50%;
             opacity: 0;
-            box-shadow: 0 0 12px 3px var(--dorado);
-            animation: flicker 3s infinite, drift 15s infinite linear;
+            box-shadow: 0 0 10px 2px var(--dorado);
+            animation: flicker 4s infinite, drift 15s infinite linear;
         }
 
         @keyframes flicker {
-            0%, 100% { opacity: 0; box-shadow: 0 0 5px 1px var(--dorado-claro); transform: scale(0.8); }
-            50% { opacity: 0.8; box-shadow: 0 0 15px 5px var(--dorado); transform: scale(1.3); }
+            0%, 100% { opacity: 0; box-shadow: 0 0 5px 1px var(--dorado); transform: scale(0.8); }
+            50% { opacity: 0.6; box-shadow: 0 0 15px 3px var(--dorado); transform: scale(1.2); }
         }
 
         @keyframes drift {
-            0% { transform: translateY(110vh) translateX(-20px); }
-            100% { transform: translateY(-10vh) translateX(50px); }
+            0% { transform: translateY(110vh) translateX(-15px); }
+            100% { transform: translateY(-10vh) translateX(30px); }
         }
 
         /* --- REPRODUCTOR DE MÚSICA --- */
@@ -78,19 +77,19 @@
             right: 30px;
             width: 50px;
             height: 50px;
-            background-color: var(--dorado);
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 5px 20px rgba(197, 160, 89, 0.3);
             z-index: 2000;
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
             transform: translateY(20px) scale(0.9);
             transition: all 0.6s var(--transition-smooth);
-            border: 2px solid #fff;
+            border: 1px solid var(--dorado);
             outline: none;
         }
 
@@ -102,19 +101,18 @@
 
         .sticky-music-btn:hover {
             transform: scale(1.1);
-            background-color: #B5952F;
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+            background-color: var(--rosa-pastel);
         }
 
-        .sticky-music-btn svg { width: 18px; height: 18px; fill: #fff; }
+        .sticky-music-btn svg { width: 18px; height: 18px; fill: var(--dorado); }
 
         /* --- SOBRE MÁGICO --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1.2s ease-in-out, visibility 1.2s;
-            background: linear-gradient(135deg, rgba(255,245,247,0.95), rgba(253,228,236,0.95));
-            backdrop-filter: blur(10px);
+            background: rgba(253, 241, 244, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         #envelope-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -126,15 +124,13 @@
         }
 
         .env-tag {
-            font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 10px;
-            text-transform: uppercase; color: var(--dorado); font-weight: 700;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+            font-family: 'Montserrat', sans-serif; font-size: 13px; letter-spacing: 8px;
+            text-transform: uppercase; color: var(--dorado); font-weight: 500;
         }
 
         .env-title {
-            font-family: 'Pinyon Script', cursive; font-size: 80px;
-            color: var(--rosa-oscuro); line-height: 1.2; margin-top: 5px;
-            text-shadow: 0 4px 15px rgba(226, 147, 179, 0.3);
+            font-family: 'Pinyon Script', cursive; font-size: 85px;
+            color: var(--text-dark); line-height: 1.1; margin-top: 10px;
         }
 
         .envelope-wrapper {
@@ -146,48 +142,48 @@
 
         .envelope {
             position: relative; width: 320px; height: 210px;
-            background-color: var(--rosa-pastel); border-radius: 4px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15), 0 0 40px rgba(212, 175, 55, 0.2); 
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background-color: #FFFFFF; border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05), 0 0 40px rgba(197, 160, 89, 0.1); 
+            border: 1px solid rgba(197, 160, 89, 0.2);
         }
 
         .envelope::before {
             content: ''; position: absolute; top: 0; right: 0;
-            border-right: 160px solid #FADBE5; border-top: 105px solid transparent;
-            border-bottom: 105px solid #FADBE5; z-index: 2;
+            border-right: 160px solid #FDFDFD; border-top: 105px solid transparent;
+            border-bottom: 105px solid #FDFDFD; z-index: 2;
         }
         
         .envelope::after {
             content: ''; position: absolute; top: 0; left: 0;
-            border-left: 160px solid #F9D1DF; border-top: 105px solid transparent;
-            border-bottom: 105px solid #F9D1DF; z-index: 2;
+            border-left: 160px solid #FFFFFF; border-top: 105px solid transparent;
+            border-bottom: 105px solid #FFFFFF; z-index: 2;
         }
 
         .front-flap {
             position: absolute; top: 0; left: 0;
             border-left: 160px solid transparent; border-right: 160px solid transparent;
-            border-top: 115px solid #FCEEF3; transform-origin: top;
+            border-top: 115px solid #F8F8F8; transform-origin: top;
             transition: transform 0.9s var(--transition-smooth); z-index: 4;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.03));
         }
 
         .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
 
         .wax-seal {
             position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
-            width: 50px; height: 50px; background-color: var(--dorado);
+            width: 50px; height: 50px; background-color: var(--rosa-oscuro);
             border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5); 
+            box-shadow: 0 5px 15px rgba(194, 130, 152, 0.4); 
             transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
-            border: 2px solid #fff;
+            border: 1px solid #fff;
         }
         
-        .wax-seal svg { width: 24px; height: 24px; fill: #fff; }
+        .wax-seal svg { width: 22px; height: 22px; fill: #fff; }
         .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.5); pointer-events: none; }
 
         .hint-text {
-            text-align: center; font-size: 12px; font-weight: 600; text-transform: uppercase; 
-            letter-spacing: 5px; color: var(--rosa-oscuro); margin-top: 50px; 
+            text-align: center; font-size: 11px; font-weight: 500; text-transform: uppercase; 
+            letter-spacing: 5px; color: var(--text-muted); margin-top: 50px; 
             animation: pulse 2.5s infinite;
         }
 
@@ -217,207 +213,214 @@
         .section-block {
             width: 100%; padding: 120px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
             position: relative; overflow: hidden;
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px);
         }
 
-        /* --- TEMAS INTERCALADOS --- */
+        /* --- TEMAS INTERCALADOS ESTILO PREMIUM --- */
         .bg-theme-1 { 
-            background-color: rgba(255, 255, 255, 0.75); 
-            --heading-color: var(--rosa-oscuro);
-            --body-color: var(--text-dark);
-            --border-color: rgba(212, 175, 55, 0.3);
+            background-color: rgba(255, 255, 255, 0.4); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
         
         .bg-theme-2 { 
-            background-color: rgba(248, 200, 220, 0.65); 
-            --heading-color: var(--dorado);
-            --body-color: var(--text-dark);
-            --border-color: rgba(255, 255, 255, 0.6);
+            background-color: transparent; 
         }
 
+        /* --- TIPOGRAFÍA PREMIUM --- */
         .tag-line {
-            font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 6px;
-            text-transform: uppercase; color: var(--dorado); margin-bottom: 25px; font-weight: 700;
+            font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 6px;
+            text-transform: uppercase; color: var(--dorado); margin-bottom: 25px; font-weight: 500;
         }
 
         .title-script {
-            font-family: 'Pinyon Script', cursive; font-size: 90px;
-            color: var(--heading-color); margin-bottom: 20px; line-height: 1.1; font-weight: 400;
-            text-shadow: 0 2px 15px rgba(255,255,255,0.8);
+            font-family: 'Pinyon Script', cursive; font-size: 95px;
+            color: var(--rosa-oscuro); margin-bottom: 15px; line-height: 1; font-weight: 400;
+        }
+
+        /* NUEVA CLASE PARA NOMBRES EN MANUSCRITA */
+        .name-script {
+            font-family: 'Pinyon Script', cursive; font-size: 65px;
+            color: var(--text-dark); line-height: 1.1; margin: 5px 0;
+        }
+
+        .info-title {
+            font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 5px; line-height: 1.4;
+            text-transform: uppercase; color: var(--dorado); margin-bottom: 15px; font-weight: 500;
+        }
+
+        .info-data {
+            font-family: 'Cormorant Garamond', serif; font-size: 34px;
+            color: var(--text-dark); margin-bottom: 5px; font-weight: 500; line-height: 1.2;
         }
 
         .body-serif {
-            font-family: 'Cormorant Garamond', serif; font-size: 24px;
-            line-height: 1.6; color: var(--body-color); font-style: italic;
-            max-width: 600px; padding: 0 15px; font-weight: 500; 
+            font-family: 'Cormorant Garamond', serif; font-size: 22px;
+            line-height: 1.6; color: var(--text-dark); font-style: italic;
+            max-width: 600px; padding: 0 15px; font-weight: 400; opacity: 0.9;
         }
 
-        .line-divider { width: 2px; height: 70px; background: linear-gradient(to bottom, transparent, var(--dorado), transparent); margin: 35px auto; }
-        .line-horizontal { width: 100px; height: 2px; background: linear-gradient(to right, transparent, var(--dorado), transparent); margin: 50px auto; }
+        /* Líneas elegantes y delgadas */
+        .line-divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, var(--dorado), transparent); margin: 30px auto; }
+        .line-horizontal { width: 80px; height: 1px; background: var(--dorado); margin: 50px auto; opacity: 0.6; }
 
-        /* --- FOTOS LIBRES SIN CAJA --- */
+        /* --- FOTOS LIBRES (LIGHTBOX) --- */
         .free-img {
-            width: 100%; max-width: 400px; margin: 40px auto;
-            border-radius: 18px; /* Bordes suaves */
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+            width: 100%; max-width: 380px; margin: 40px auto;
+            border-radius: 12px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             transition: transform 0.8s ease, box-shadow 0.8s ease, filter 0.8s ease;
             cursor: pointer;
             position: relative; z-index: 2;
         }
         .free-img:hover {
-            transform: scale(1.03) translateY(-10px);
-            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4);
-            filter: brightness(1.05);
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            filter: brightness(1.03);
         }
 
-        /* --- LIGHTBOX (Pantalla completa) --- */
+        /* --- LIGHTBOX --- */
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); z-index: 9999;
+            background: rgba(25, 20, 22, 0.95); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
         }
         #lightbox.active { opacity: 1; visibility: visible; }
         #lightbox img {
-            max-width: 90%; max-height: 90%; border-radius: 8px;
-            box-shadow: 0 0 30px rgba(255,255,255,0.2);
-            transform: scale(0.8); transition: transform 0.4s ease;
+            max-width: 90%; max-height: 90%; border-radius: 4px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            transform: scale(0.95); transition: transform 0.4s ease;
         }
         #lightbox.active img { transform: scale(1); }
         .close-lightbox {
             position: absolute; top: 20px; right: 30px; color: #fff;
-            font-size: 40px; cursor: pointer; font-family: sans-serif;
+            font-size: 40px; cursor: pointer; font-family: sans-serif; font-weight: 300;
         }
 
-        .info-title {
-            font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 5px; line-height: 1.4;
-            text-transform: uppercase; color: var(--dorado); margin-bottom: 15px; font-weight: 700;
-        }
-
-        .info-data {
-            font-family: 'Cormorant Garamond', serif; font-size: 36px;
-            color: var(--heading-color); margin-bottom: 5px; font-weight: 600; line-height: 1.3;
-        }
-
-        /* --- CONTADOR --- */
+        /* --- CONTADOR MINIMALISTA (SIN CAJAS) --- */
         .countdown-container {
-            display: flex; justify-content: center; gap: 15px; margin: 40px auto; z-index: 2; position: relative;
+            display: flex; justify-content: center; align-items: center; margin: 35px auto; z-index: 2; position: relative;
         }
         .time-box {
-            background: rgba(255, 255, 255, 0.95); border: 1px solid var(--dorado-claro); border-radius: 12px;
-            padding: 15px 12px; min-width: 75px; display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+            display: flex; flex-direction: column; align-items: center; padding: 0 15px; position: relative;
+        }
+        /* Separadores sutiles (:) entre números */
+        .time-box:not(:last-child)::after {
+            content: ':';
+            position: absolute;
+            right: -4px;
+            top: 20%;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            color: var(--dorado);
+            opacity: 0.6;
         }
         .time-box span {
-            font-family: 'Cinzel', serif; font-size: 30px; color: var(--rosa-oscuro);
-            font-weight: 700; line-height: 1.2; 
+            font-family: 'Cormorant Garamond', serif; font-size: 45px; color: var(--text-dark);
+            font-weight: 500; line-height: 1; 
         }
         .time-box small {
-            font-family: 'Montserrat', sans-serif; font-size: 11px; text-transform: uppercase;
-            letter-spacing: 2px; color: var(--text-muted); margin-top: 5px; font-weight: 600;
+            font-family: 'Montserrat', sans-serif; font-size: 9px; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--text-muted); margin-top: 8px; font-weight: 500;
         }
 
-        /* --- BOTONES --- */
+        /* --- BOTONES PREMIUM (OUTLINE) --- */
         .btn-solid {
-            display: inline-block; padding: 18px 40px; 
-            font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 4px; 
+            display: inline-block; padding: 16px 40px; 
+            font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 4px; 
             text-transform: uppercase; text-decoration: none; 
-            cursor: pointer; border-radius: 35px; transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5;
+            cursor: pointer; border-radius: 30px; transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5;
+            background-color: transparent; 
+            color: var(--text-dark); 
+            border: 1px solid var(--text-dark); 
         }
         
-        .bg-theme-1 .btn-solid {
-            background-color: var(--dorado); color: #fff; border: 1px solid var(--dorado-claro); 
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        .btn-solid:hover { 
+            background-color: var(--text-dark); 
+            color: #fff; 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+            border-color: var(--text-dark);
         }
-        .bg-theme-1 .btn-solid:hover { background-color: #B5952F; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5); }
-        
-        .bg-theme-2 .btn-solid {
-            background-color: #FFFFFF; color: var(--rosa-oscuro); border: 1px solid #FFFFFF; 
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
-        }
-        .bg-theme-2 .btn-solid:hover { background-color: #FFF5F7; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 255, 255, 0.8); }
 
+        /* --- CALENDARIO --- */
         .calendar-wrapper {
-            width: 100%; max-width: 340px; margin: 40px auto; padding: 35px 25px; background: rgba(255, 255, 255, 0.9); 
-            border-radius: 15px; box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15); box-sizing: border-box; 
-            border: 1px solid var(--dorado-claro); position: relative; z-index: 2;
+            width: 100%; max-width: 320px; margin: 40px auto; padding: 35px 25px; 
+            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(5px);
+            border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.03); box-sizing: border-box; 
+            border: 1px solid rgba(197, 160, 89, 0.15); position: relative; z-index: 2;
         }
-
         .calendar-month {
-            font-family: 'Cinzel', serif; font-size: 22px; color: var(--dorado);
-            text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; font-weight: 700;
+            font-family: 'Cinzel', serif; font-size: 18px; color: var(--text-dark);
+            text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: 500;
         }
-
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; width: 100%; box-sizing: border-box; }
-        .cal-header { font-family: 'Montserrat', sans-serif; font-size: clamp(10px, 3vw, 12px); font-weight: 700; color: var(--rosa-oscuro); padding-bottom: 12px; }
-        .cal-day { font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 4.5vw, 22px); font-weight: 600; color: var(--text-dark); display: flex; justify-content: center; align-items: center; aspect-ratio: 1; }
-        .cal-day.active { background-color: var(--dorado); color: #fff; border-radius: 50%; font-weight: 600; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
+        .cal-header { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 500; color: var(--text-muted); padding-bottom: 12px; }
+        .cal-day { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--text-dark); display: flex; justify-content: center; align-items: center; aspect-ratio: 1; }
+        .cal-day.active { background-color: var(--rosa-oscuro); color: #fff; border-radius: 50%; box-shadow: 0 5px 15px rgba(194,130,152,0.4); }
 
         .map-box {
-            width: 100%; max-width: 550px; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 15px; 
-            box-shadow: 0 20px 40px rgba(212,175,55,0.2); position: relative; z-index: 2; border: 2px solid var(--dorado-claro);
-            background: #fff; padding: 5px;
+            width: 100%; max-width: 550px; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 12px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); position: relative; z-index: 2; 
+            border: 1px solid rgba(197, 160, 89, 0.2); background: #fff; padding: 4px;
         }
-        .map-box iframe { width: 100%; height: 100%; border: none; border-radius: 10px; }
+        .map-box iframe { width: 100%; height: 100%; border: none; border-radius: 8px; filter: grayscale(20%) contrast(90%); }
 
         /* --- ITINERARIO --- */
         .timeline-container {
-            width: 100%; max-width: 400px; margin: 30px auto; position: relative; text-align: left;
+            width: 100%; max-width: 350px; margin: 30px auto; position: relative; text-align: left;
         }
         .timeline-item {
-            display: flex; margin-bottom: 25px; position: relative;
+            display: flex; margin-bottom: 30px; position: relative;
         }
         .timeline-time {
-            font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; color: var(--dorado);
-            width: 90px; flex-shrink: 0; padding-top: 2px;
+            font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: var(--dorado);
+            width: 80px; flex-shrink: 0; padding-top: 5px; letter-spacing: 1px;
         }
         .timeline-content {
-            font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--text-dark);
-            padding-left: 20px; border-left: 2px solid var(--dorado-claro); position: relative;
+            font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--text-dark);
+            padding-left: 25px; border-left: 1px solid rgba(197, 160, 89, 0.3); position: relative;
         }
         .timeline-content::before {
-            content: ''; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px;
-            background: var(--rosa-oscuro); border-radius: 50%; box-shadow: 0 0 10px rgba(226,147,179,0.5);
+            content: ''; position: absolute; left: -4px; top: 10px; width: 7px; height: 7px;
+            background: var(--rosa-oscuro); border-radius: 50%;
         }
 
         /* --- FORMULARIOS --- */
-        .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; position: relative; z-index: 2; }
+        .form-group { width: 100%; max-width: 400px; margin: 0 auto 15px auto; position: relative; z-index: 2; }
         .input-line {
-            width: 100%; padding: 18px 20px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; outline: none;
+            width: 100%; padding: 18px 20px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 400; outline: none;
             text-align: center; transition: all 0.4s; 
+            background: rgba(255,255,255,0.6); border: 1px solid rgba(197, 160, 89, 0.3); color: var(--text-dark); box-shadow: none;
         }
-        textarea.input-line { resize: vertical; min-height: 120px; }
+        textarea.input-line { resize: vertical; min-height: 100px; }
         select.input-line { appearance: none; text-align-last: center; cursor: pointer; }
         
-        .bg-theme-1 .input-line, .bg-theme-2 .input-line { background: rgba(255,255,255,0.9); border: 1px solid var(--dorado-claro); color: var(--text-dark); box-shadow: 0 5px 15px rgba(212,175,55,0.1); }
-        .bg-theme-1 .input-line:focus, .bg-theme-2 .input-line:focus { border-color: var(--dorado); box-shadow: 0 0 15px rgba(212,175,55,0.3); background: #ffffff; }
+        .input-line:focus { border-color: var(--text-dark); background: #ffffff; }
         
         .ticket-card {
-            width: 100%; max-width: 380px; margin: 30px auto; background: rgba(255, 255, 255, 0.85);
-            padding: 50px 25px; position: relative; text-align: center; border-radius: 15px; box-shadow: 0 20px 40px rgba(212,175,55,0.2);
-            border: 1px solid var(--dorado-claro); z-index: 2; 
+            width: 100%; max-width: 360px; margin: 30px auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(5px);
+            padding: 50px 25px; position: relative; text-align: center; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(197, 160, 89, 0.2); z-index: 2; 
         }
         .ticket-card::before, .ticket-card::after {
-            content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background-color: var(--rosa-pastel); 
-            border-radius: 50%; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; background-color: var(--rosa-pastel); 
+            border-radius: 50%; box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
         }
-        .ticket-card::before { left: -16px; border-right: 1px solid var(--dorado-claro); }
-        .ticket-card::after { right: -16px; border-left: 1px solid var(--dorado-claro); }
+        .ticket-card::before { left: -12px; border-right: 1px solid rgba(197, 160, 89, 0.2); }
+        .ticket-card::after { right: -12px; border-left: 1px solid rgba(197, 160, 89, 0.2); }
         
         .footer-invytia {
-            font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--text-muted);
+            font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 4px; color: var(--text-muted);
             text-align: center; margin: 40px 0 20px 0; text-transform: uppercase;
         }
 
         @media (max-width: 400px) {
-            .env-title { font-size: 60px; }
-            .title-script { font-size: 70px; }
+            .env-title { font-size: 70px; }
+            .title-script { font-size: 75px; }
+            .name-script { font-size: 50px; }
             .section-block { padding: 90px 15px; }
-            .info-data { font-size: 30px; }
-            .countdown-container { gap: 10px; }
-            .time-box { min-width: 60px; padding: 12px 5px; }
-            .time-box span { font-size: 24px; }
+            .info-data { font-size: 28px; }
+            .time-box span { font-size: 35px; }
             .map-box { height: 260px; }
             .envelope { width: 300px; height: 195px; }
             .envelope::before, .envelope::after { border-left-width: 150px; border-right-width: 150px; border-top-width: 97px; border-bottom-width: 97px; }
@@ -481,27 +484,31 @@
         <!-- 2. Padres y Madrinas -->
         <section class="section-block bg-theme-2">
             <div class="anim-element anim-fade-up delay-1 info-title">Con la bendición de Dios y mi padre</div>
-            <div class="anim-element anim-fade-up delay-2 info-data">Juan de Dios Gatica Aquines</div>
+            
+            <!-- Nombre del Padre en Manuscrita -->
+            <div class="anim-element anim-fade-up delay-2 name-script">Juan de Dios Gatica Aquines</div>
             
             <img src="assets/2.jpg" class="anim-element anim-fade-up delay-3 free-img" alt="Padre" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
 
             <div class="anim-element anim-zoom delay-4 line-horizontal"></div>
             
             <div class="anim-element anim-fade-up delay-4 info-title">Y mis Madrinas</div>
-            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 32px;">Maru Gatica</div>
-            <div class="anim-element anim-fade-up delay-4" style="font-family: 'Cinzel', serif; font-size: 18px; margin: 10px 0; font-weight: 700; color: var(--rosa-oscuro);">&</div>
-            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 32px;">Iris Gatica</div>
+            
+            <!-- Nombres de Madrinas en Manuscrita -->
+            <div class="anim-element anim-fade-up delay-4 name-script">Maru Gatica</div>
+            <div class="anim-element anim-fade-up delay-4" style="font-family: 'Montserrat', sans-serif; font-size: 14px; margin: 10px 0; font-weight: 400; color: var(--dorado);">&</div>
+            <div class="anim-element anim-fade-up delay-4 name-script">Iris Gatica</div>
 
             <img src="assets/3.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Madrinas" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
         </section>
 
         <!-- 3. Fecha, Contador y Calendario -->
         <section class="section-block bg-theme-1">
-            <div class="anim-element anim-fade-up delay-1 info-title" style="letter-spacing: 2px;">Únete a esta gran celebración el</div>
-            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 42px; font-weight: 700;">14 de Noviembre</div>
-            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 28px; color: var(--dorado); letter-spacing: 3px;">2026</div>
+            <div class="anim-element anim-fade-up delay-1 info-title">Únete a esta celebración el</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">14 de Noviembre</div>
+            <div class="anim-element anim-fade-up delay-3" style="font-family: 'Cinzel', serif; font-size: 22px; color: var(--dorado); letter-spacing: 4px; margin-top: 5px;">2026</div>
 
-            <!-- CONTADOR -->
+            <!-- CONTADOR MINIMALISTA (SIN CAJAS) -->
             <div class="anim-element anim-fade-up delay-4 countdown-container">
                 <div class="time-box"><span id="days">00</span><small>Días</small></div>
                 <div class="time-box"><span id="hours">00</span><small>Hrs</small></div>
@@ -509,7 +516,7 @@
                 <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
             </div>
 
-            <!-- Calendario adaptado a Noviembre 2026 -->
+            <!-- Calendario -->
             <div class="anim-element anim-zoom delay-4 calendar-wrapper">
                 <div class="calendar-month">Noviembre</div>
                 <div class="calendar-grid">
@@ -532,8 +539,8 @@
             <!-- Ceremonia -->
             <div class="anim-element anim-fade-up delay-1 info-title">Ceremonia Religiosa</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Parroquia y Santuario</div>
-            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 28px;">Nuestra Señora de Guadalupe</div>
-            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 28px; color: var(--dorado); margin-top: 10px;">7:00 p.m.</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">Nuestra Sra. de Guadalupe</div>
+            <div class="anim-element anim-fade-up delay-3" style="font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 500; color: var(--dorado); margin-top: 15px; letter-spacing: 2px;">7:00 P.M.</div>
             
             <div class="anim-element anim-zoom delay-4 map-box">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.829550845864!2d-100.25999999999999!3d25.6769444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662bfff882bc205%3A0x676c9d0aeab7f9dd!2sParroquia%20y%20Santuario%20de%20Nuestra%20Se%C3%B1ora%20de%20Guadalupe!5e0!3m2!1ses-419!2smx!4v1791766935683!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -542,12 +549,12 @@
 
             <img src="assets/5.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Ceremonia" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
 
-            <div class="anim-element anim-zoom delay-4 line-horizontal" style="margin: 70px auto;"></div>
+            <div class="anim-element anim-zoom delay-4 line-horizontal"></div>
 
             <!-- Recepción -->
             <div class="anim-element anim-fade-up delay-1 info-title">Recepción</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Salón Colonial Eventos</div>
-            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 28px; color: var(--dorado); margin-top: 10px;">8:00 p.m.</div>
+            <div class="anim-element anim-fade-up delay-3" style="font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 500; color: var(--dorado); margin-top: 15px; letter-spacing: 2px;">8:00 P.M.</div>
             
             <div class="anim-element anim-zoom delay-4 map-box">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.819295047535!2d-100.2615581!3d25.6772843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662be2a3820998d%3A0x7cd29ff3e4182e0a!2sColonial%20Eventos!5e0!3m2!1ses-419!2smx!4v1791766965782!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -565,23 +572,23 @@
             
             <div class="anim-element anim-fade-up delay-3 timeline-container">
                 <div class="timeline-item">
-                    <div class="timeline-time">8:00 pm</div>
+                    <div class="timeline-time">8:00 PM</div>
                     <div class="timeline-content">Inicia Recepción</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-time">9:00 pm</div>
+                    <div class="timeline-time">9:00 PM</div>
                     <div class="timeline-content">Cena</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-time">9:40 pm</div>
+                    <div class="timeline-time">9:40 PM</div>
                     <div class="timeline-content">Pastel</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-time">10:00 pm</div>
+                    <div class="timeline-time">10:00 PM</div>
                     <div class="timeline-content">Baile - Grupo Legado SG</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-time">11:30 pm</div>
+                    <div class="timeline-time">11:30 PM</div>
                     <div class="timeline-content">Hora Loca</div>
                 </div>
             </div>
@@ -592,22 +599,22 @@
         <!-- 6. Dress Code y Mesa de Regalos -->
         <section class="section-block bg-theme-2">
             <div class="anim-element anim-fade-up delay-1 info-title">Código de Vestimenta</div>
-            <div class="anim-element anim-fade-up delay-2 info-data" style="font-family: 'Cinzel', serif; font-size: 40px; margin: 15px 0; letter-spacing: 6px; color: var(--dorado);">
+            <div class="anim-element anim-fade-up delay-2" style="font-family: 'Cinzel', serif; font-size: 32px; font-weight: 500; margin: 10px 0; letter-spacing: 10px; color: var(--text-dark);">
                 FORMAL
             </div>
             
-            <div class="anim-element anim-zoom delay-3 line-horizontal" style="margin: 50px auto;"></div>
+            <div class="anim-element anim-zoom delay-3 line-horizontal"></div>
 
             <div class="anim-element anim-fade-up delay-3 info-title">Mesa de Regalos</div>
-            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 32px;">Lluvia de Sobres</div>
-            <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 20px;">
+            <div class="anim-element anim-fade-up delay-4 info-data">Lluvia de Sobres</div>
+            <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 15px;">
                 Es la tradición de regalar dinero en efectivo a la quinceañera en un sobre el día del evento. ¡Muchas gracias!
             </p>
 
             <img src="assets/8.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Regalos" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
         </section>
 
-        <!-- 7. Galería en Vivo (QR Tabletop Logic) -->
+        <!-- 7. Galería en Vivo -->
         <section class="section-block bg-theme-1">
             <div class="anim-element anim-fade-up delay-1 info-title">Galería en Vivo</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Captura la Magia</div>
@@ -626,27 +633,27 @@
             <div id="pases-section" style="display: none; width: 100%;">
                 <div class="anim-element anim-fade-up delay-1 info-title">Tu Pase al Evento</div>
                 <div class="anim-element anim-zoom delay-2 ticket-card">
-                    <div class="tag-line" style="margin-bottom: 20px; color: var(--dorado);">Invitación de Honor</div>
+                    <div class="tag-line" style="margin-bottom: 20px;">Invitación de Honor</div>
                     
-                    <div id="ticket-name" style="font-family: 'Cormorant Garamond', serif; font-size: 30px; color: var(--rosa-oscuro); font-style: italic; margin-bottom: 15px; font-weight: 700; line-height: 1.2;">
+                    <div id="ticket-name" style="font-family: 'Pinyon Script', cursive; font-size: 40px; color: var(--rosa-oscuro); margin-bottom: 20px; line-height: 1.1;">
                         Invitado Especial
                     </div>
 
-                    <div class="body-serif" style="font-size: 20px; margin-bottom: 15px; color: var(--text-dark);">Lugares Reservados</div>
-                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 65px; font-weight: 700; color: var(--rosa-oscuro); line-height: 1;">
+                    <div class="body-serif" style="font-size: 18px; margin-bottom: 10px;">Lugares Reservados</div>
+                    <div id="ticket-count" style="font-family: 'Cormorant Garamond', serif; font-size: 60px; font-weight: 500; color: var(--text-dark); line-height: 1;">
                         0
                     </div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 35px;">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); margin-top: 30px;">
                         Muestra esta pantalla en la recepción
                     </div>
                 </div>
-                <div class="anim-element anim-fade-up line-horizontal" style="margin: 60px auto;"></div>
+                <div class="anim-element anim-fade-up line-horizontal"></div>
             </div>
 
             <!-- Formulario RSVP -->
             <div class="anim-element anim-fade-up delay-1 info-title">RSVP</div>
-            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 38px;">Confirmar Asistencia</div>
-            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 35px auto; font-size: 22px;">
+            <div class="anim-element anim-fade-up delay-2 info-data">Confirmar Asistencia</div>
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 35px auto;">
                 Agradeceremos tu confirmación para preparar todo para este gran día.
             </p>
             
@@ -668,14 +675,14 @@
                 </select>
             </div>
             
-            <button onclick="sendRSVP()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 70px;">Confirmar por WhatsApp</button>
+            <button onclick="sendRSVP()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 50px;">Confirmar Asistencia</button>
 
             <div class="anim-element anim-zoom line-divider"></div>
 
             <!-- Muro de Deseos -->
             <div class="anim-element anim-fade-up delay-1 info-title">Mensajes Especiales</div>
-            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 38px;">Muro de los Deseos</div>
-            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 25px auto; font-size: 22px;">
+            <div class="anim-element anim-fade-up delay-2 info-data">Muro de los Deseos</div>
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 25px auto;">
                 "Gracias por compartir esta noche conmigo"
             </p>
 
@@ -685,7 +692,7 @@
             <div class="anim-element anim-fade-up delay-4 form-group">
                 <textarea id="wish-message" class="input-line" placeholder="Escribe aquí tu mensaje..."></textarea>
             </div>
-            <button onclick="sendWish()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 50px;">Enviar Mensaje</button>
+            <button onclick="sendWish()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 40px;">Enviar Mensaje</button>
             
             <img src="assets/10.jpg" class="anim-element anim-fade-up delay-4 free-img" alt="Despedida" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
 
@@ -709,13 +716,13 @@
         // --- EFECTO DE DESTELLOS MAGICOS ---
         function createSparkles() {
             const container = document.getElementById('sparkles');
-            const numSparkles = 50; 
+            const numSparkles = 40; 
             for(let i=0; i<numSparkles; i++) {
                 let sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
                 sparkle.style.left = Math.random() * 100 + 'vw';
                 sparkle.style.top = Math.random() * 120 + 'vh';
-                sparkle.style.width = (Math.random() * 5 + 2) + 'px';
+                sparkle.style.width = (Math.random() * 4 + 2) + 'px';
                 sparkle.style.height = sparkle.style.width;
                 sparkle.style.animationDelay = (Math.random() * 5) + 's';
                 sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's, ' + (Math.random() * 15 + 10) + 's';
@@ -819,7 +826,7 @@
         let parametroId = urlParams.get('id');
         let parametroPases = urlParams.get('p') || urlParams.get('pases');
         
-        // Número proporcionado para confirmaciones y buenos deseos (México: +52)
+        // Número proporcionado para confirmaciones y buenos deseos
         const currentPhoneNumber = "528186815596"; 
 
         if (parametroId && dbInvitados[parametroId]) {
